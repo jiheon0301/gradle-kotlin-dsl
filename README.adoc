@@ -1,0 +1,99 @@
+= Gradle Kotlin DSL 에 대한 (두서없는) 이야기
+jiheon.kim, jiheon.kim@woowahan.com
+v0.0.1, 2019-04-30
+:toc: left
+:toclevel: 4
+
+이 글은...
+
+[quote#honeymon, #월급쟁이개발자 허니몬]
+____
+Developer life is **Coding** between **Build** and **Deploy**.
+
+개발자 인생은 프로젝트 빌드와 배포 사이 삽질로 기억된다.
+____
+
+== 빌드 도구(Build tool)
+개발자 프로젝트를 구성하는 단계에서  가장 먼저 고려할 것 중에 하나가 '빌드 도구'라고 생각한다.
+
+* link:https://stackoverflow.com/questions/7249871/what-is-a-build-tool[]
+
+빌드 도구에 대해서 어떻게 설명하면 좋을까 하고 고민을 하며 인터넷 검색으로 가장 마음에 들게 설명한 글을 하나 찾았다. +
+
+"'빌드도구'란 무엇인가?" 라는 질문에 달린 댓글 중,
+
+> 빌드도구는 소스코드를 자동으로 실행가능한 애플리케이션 생성물을 만드는 프로그램이다. 빌드과정은 소스코드를 컴파일하고 연결하고 패키징하여 쓸만한 형태로 가공한다.
+
+라는 정의와 함께 다음의 행위를 정의한 스크립트를
+
+빌드 자동화(Build automation)
+
+. 의존성 라이브러리 다운로드
+. 컴파일: 소스코드 -> 바이너리코드
+. 바이너리코드 패키징
+. 테스트 실행
+. 운영시스템으로 배포
+
+자바(link:https://adoptopenjdk.net/[Java])에서 널리 사용되고 있는 빌드도구는 앤트(Ant, link:https://ant.apache.org/[]), 메이븐(Maven, link:https://maven.apache.org/[])과 그레이들(Gradle, link:https://gradle.org/[])이 있다.
+
+// 빌드도구에 대한 동작을 설명할 필요는 없겠지... 나중에 책에 써먹어야지.
+
+
+=== 메이븐(Maven) vs 그레이들(Gradle)
+현대까지 널리 사용되고 있는 빌드도구는 메이븐과 그레이들이 있다. 내가 주력으로 사용하는 빌드도구는 **그레이들**이다.
+
+[NOTE]
+====
+참고로 스프링 부트 프로젝트(link:https://github.com/spring-projects/spring-boot[])는 메이븐을 빌드도구로 사용하고 있다.
+====
+
+나는 **멀티 프로젝트 구성기능**과 **래퍼(Wrapper)** 지원 기능을 보고 그레이들을 선택했다.
+
+래퍼 기능을 보고 쌈빡하다고 생각했다. 래퍼 기능이 있기 이전에는 각 개발자의 로컬환경마다 빌드 도구를 설치해야 했다.
+
+
+=== 그레이들(Gradle)은?
+트위터로 팔로잉하고 있는 계정 중 하 link:https://twitter.com/ReleasesHub[@ReleaseHub]에서 link:https://twitter.com/ReleasesHub/status/1111221407281631232[그레이들 5.3.1 출시 트윗]을 보면서, 그레이들에 대해서 다뤄봐야겠다고 생각하며 회사 기술블로그에 쓰고 있던 내용을 버리고(...) 이 글을 쓴다.
+
+프로그래머라면 자신의 프로젝트에서 사용할 각종 라이브러리 버전을 관리하고 애플리케이션을 배포하기 위해
+
+그레이들 세상에는 2가지 DSL 이 있다.
+
+그루비로 작성하는 DSL 과 코틀린으로 작성하는 DSL
+
+이 글을 쓰기 전에는 '스펙(SPEK)으로 다가가는 코틀린!' 이었지만, 사람들의 관심을 끌기는 어렵게 느껴졌다.
+
+코틀린...
+
+자바, 스프링부트, 안드로이드 등을 하는 사람이라면 누구나 열어보고 제어해야하는 그레이들 빌드스크립트부터 살펴보도록 유도하면서 코틀린 유저 저변을 넓혀보는 것을 목표로 한다.
+
+그레이들 코틀린 DSL 은 그레이들 5.0 출시와 함께 지원되기 시작한다. 그레이들 5.0 이전 버전은 지원하지 않는다.
+사용해보고 싶은 마음이 있다면
+
+== 빌드도구의 빌드스크립트
+
+=== DSL 이란?
+DSL(Domain-Specific language, 도메인 특화 언어, https://ko.wikipedia.org/wiki/도메인_특화_언어[])는 '특정한 도메인을 적용하는데 특화된 컴퓨터 언어'다. 이런 의미에서 본다면 'Gradle DSL'은 '그레이들에 한정된 도메인 언어'라고 정의할 수 있다. 현재 그레이들 DSL 에 사용된 프로그래밍 언어는 그루비(Groovy, http://groovy.apache.org/[])와 코틀린(Kotlin, link:https://kotlinlang.org/[])을 사용한다.
+
+=== DSL: Groovy vs Kotlin
+Gradle DSL 에 채택된 두 가지 프로그래밍 언어의 특징을 살펴보면서 ...
+
+
+== Gradle **Kotlin** DSL
+* **Gradle 5.0 부터 지원**
+* 그루비 DSL 대안으로 IDE의 지원을 받을 수 있다.
+* 안드로이드 개발자에게는 더욱 익숙한
+* Kotlin 프로젝트에서 Gradle DSL 관리
+* Spring Initializr(link:https://start.spring.io/[])는 아직 Gradle Kotlin DSL을 지원하지 않는다.
+
+
+== 참고
+* link:https://stackoverflow.com/questions/7249871/what-is-a-build-tool[]
+* link:https://ant.apache.org/[]
+* link:https://maven.apache.org/[]
+* link:https://gradle.org/[]
+* link:https://ko.wikipedia.org/wiki/도메인_특화_언어[]
+* link:http://groovy.apache.org/[]
+* link:https://kotlinlang.org/[]
+* link:https://docs.gradle.org/current/userguide/kotlin_dsl.html[]
+* link:https://github.com/spring-projects/spring-boot[]
