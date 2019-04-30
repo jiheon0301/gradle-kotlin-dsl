@@ -1,5 +1,5 @@
 plugins { // 선언적 플러그인 정의
-    id("org.springframework.boot") version "2.1.3.RELEASE"
+    id("org.springframework.boot") version "2.1.4.RELEASE"
     id("org.jetbrains.kotlin.jvm") version "1.3.21" // == kotlin("jvm") version "1.3.21"
     id("org.jetbrains.kotlin.plugin.spring") version "1.3.21" // kotlin("pluugin.spring") version "1.3.21"
     id("org.jetbrains.kotlin.kapt") version "1.3.21" // == kotlin("kapt") version "1.3.21"
