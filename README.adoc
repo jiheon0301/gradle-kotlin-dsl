@@ -243,7 +243,7 @@ project("bootiful-api") {
 // ./gradlew wrapper --gradle-version={version}
 $ ./gradlew wrapper --gradle-version=5.4
 
-// 이 글을 쓰고 있는 몇일 사이에 5.4.1 버전이 출시(2019-04-26)했다.
+// 이 글을 쓰고 있는 며칠 사이에 5.4.1 버전이 출시(2019-04-26)했다.
 // 5.4 부터 JDK 12 지원한다. 내 프로젝트는 JDK 8에서 머물러 있는데...
 ----
 
